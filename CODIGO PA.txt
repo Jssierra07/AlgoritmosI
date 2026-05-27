@@ -1,0 +1,161 @@
+/**
+* PROYECTO FINAL DE LÓGICA Y ALGORITMIA
+* * INTEGRANTES DEL GRUPO:
+* 1. Luis Miguel Chacon Patiñp
+* 2. Sergio Andres Garcia Mansilla
+* 3. Johan David Toro Mina
+* 4. Juan Pablo Mendez Beltrán
+* 5. Julian Santiago Sierra Rodriguez
+* * DESCRIPCIÓN: Sistema modular para la gestión de un parqueadero por consola.
+* Aplica lógica condicional, ciclos, acumuladores, banderas, arreglos y Big-O.
+*/
+import java.util.Scanner;
+public class SistemaParqueadero {
+   // --- VARIABLES GLOBALES Y CONSTANTES (Tipos de datos y Estructuras simples) ---
+   private static final int TOTAL_CUPOS = 5; // Constante para el tamaño del arreglo
+   private static String[] parqueadero = new String[TOTAL_CUPOS]; // Arreglo para cupos
+   private static double[] horasIngreso = new double[TOTAL_CUPOS]; // Almacena hora de entrada
+   private static final double TARIFA_HORA = 5000.0; // Tarifa constante por hora (COP)
+   // Variables de uso especial: conteo y sumatoria
+   private static int totalVehiculosAtendidos = 0;
+   private static double recaudacionTotal = 0.0;
+   /**
+    * Método principal (Main) - Controla el flujo secuencial y el menú.
+    */
+   public static void main(String[] args) {
+       Scanner teclado = new Scanner(System.in);
+       boolean salir = false; // Variable de bandera para el control del ciclo
+       // Inicialización explícita del arreglo (Estructura de datos simple)
+       for (int i = 0; i < parqueadero.length; i++) {
+           parqueadero[i] = "VACÍO";
+       }
+       /* * Sentencia de repetición condicionada al final (do-while).
+        * Asegura que el menú se despliegue al menos una vez en la consola de NetBeans.
+        */
+       do {
+           mostrarMenu();
+           System.out.print("Seleccione una opción: ");
+           // Validación para evitar errores si el usuario digita letras
+           if (!teclado.hasNextInt()) {
+               System.out.println("Error: Debe ingresar un número entero.");
+               teclado.next(); // Limpia el buffer del scanner
+               continue;
+           }
+           int opcion = teclado.nextInt();
+           /* Sentencia de decisión múltiple (casos del menú) */
+           switch (opcion) {
+               case 1:
+                   registrarIngreso(teclado);
+                   break;
+               case 2:
+                   registrarSalida(teclado);
+                   break;
+               case 3:
+                   mostrarEstadoParqueadero();
+                   break;
+               case 4:
+                   mostrarEstadisticas();
+                   break;
+               case 5:
+                   salir = true; // Expresión lógica para romper el ciclo
+                   System.out.println("Saliendo del sistema de forma segura...");
+                   break;
+               default:
+                   System.out.println("Opción inválida. Intente de nuevo.");
+           }
+           System.out.println("----------------------------------------");
+       } while (!salir); // Operador lógico de negación aplicado a la bandera
+       teclado.close();
+   }
+   // --- FUNCIONES Y PROCEDIMIENTOS MODULARES ---
+   /**
+    * Procedimiento sin retorno y sin parámetros para mostrar la interfaz.
+    */
+   public static void mostrarMenu() {
+       System.out.println("\n=== SISTEMA DE GESTIÓN DE PARQUEADERO ===");
+       System.out.println("1. Registrar Ingreso de Vehículo");
+       System.out.println("2. Registrar Salida y Facturar");
+       System.out.println("3. Ver Estado del Parqueadero (Arreglo)");
+       System.out.println("4. Ver Estadísticas y Recaudación");
+       System.out.println("5. Salir del Programa");
+   }
+   /**
+    * Procedimiento con parámetros para gestionar ingresos.
+    * Utiliza decisiones simples y análisis de eficiencia O(N).
+    */
+   public static void registrarIngreso(Scanner scanner) {
+       System.out.print("Ingrese la placa del vehículo: ");
+       String placa = scanner.next().toUpperCase();
+       System.out.print("Ingrese la hora de ingreso (formato 24h, ej: 14,5): ");
+       double hora = scanner.nextDouble();
+       boolean cupoEncontrado = false; // Bandera local
+       /* Iteración ascendente para recorrer la estructura de datos */
+       for (int i = 0; i < TOTAL_CUPOS; i++) {
+           // Sentencia de decisión simple para validar disponibilidad
+           if (parqueadero[i].equals("VACÍO")) {
+               parqueadero[i] = placa;
+               horasIngreso[i] = hora;
+               cupoEncontrado = true;
+               totalVehiculosAtendidos++; // Variable de conteo (Operador aritmético)
+               System.out.println("Vehículo asignado exitosamente al cupo número: " + (i + 1));
+               break; // Rompe el ciclo tras realizar la asignación
+           }
+       }
+       // Condicional para evaluar si el parqueadero colapsó en capacidad
+       if (!cupoEncontrado) {
+           System.out.println("Lo sentimos, el parqueadero se encuentra lleno actualmente.");
+       }
+   }
+   /**
+    * Procedimiento con parámetros para procesar salidas.
+    * Resuelve expresiones aritméticas y relacionales con eficiencia O(1).
+    */
+   public static void registrarSalida(Scanner scanner) {
+       System.out.print("Ingrese el número del cupo a liberar (1 a " + TOTAL_CUPOS + "): ");
+       int cupo = scanner.nextInt() - 1; // Ajuste de índice aritmético para el arreglo
+       /* Sentencia de decisión anidada para control de desbordamiento de datos */
+       if (cupo >= 0 && cupo < TOTAL_CUPOS) {
+           if (!parqueadero[cupo].equals("VACÍO")) {
+               System.out.print("Ingrese la hora de salida (formato 24h): ");
+               double horaSalida = scanner.nextDouble();
+               // Resolución de expresión relacional y lógica
+               if (horaSalida > horasIngreso[cupo]) {
+                   double tiempoTotal = horaSalida - horasIngreso[cupo]; // Expresión aritmética
+                   double valorAPagar = tiempoTotal * TARIFA_HORA;
+                   recaudacionTotal += valorAPagar; // Variable de sumatoria (Acumulador)
+                   System.out.println("\n=== FACTURA GENERADA ===");
+                   System.out.println("Vehículo Placa: " + parqueadero[cupo]);
+                   System.out.println("Tiempo estacionado: " + tiempoTotal + " horas.");
+                   System.out.println("Total a pagar: $" + valorAPagar + " COP");
+                   // Reestablecimiento de las variables del arreglo
+                   parqueadero[cupo] = "VACÍO";
+                   horasIngreso[cupo] = 0.0;
+               } else {
+                   System.out.println("Error lógico: La hora de salida no puede ser menor o igual a la de ingreso.");
+               }
+           } else {
+               System.out.println("El cupo seleccionado ya se encuentra vacío.");
+           }
+       } else {
+           System.out.println("Número de cupo inválido fuera de los límites de datos.");
+       }
+   }
+   /**
+    * Procedimiento para el recorrido del arreglo en orden secuencial.
+    */
+   public static void mostrarEstadoParqueadero() {
+       System.out.println("\n--- MAPA ACTUAL DEL PARQUEADERO ---");
+       /* Iteración ascendente estándar */
+       for (int i = 0; i < TOTAL_CUPOS; i++) {
+           System.out.println("Cupo [" + (i + 1) + "]: " + parqueadero[i]);
+       }
+   }
+   /**
+    * Procedimiento para la visualización de métricas y acumuladores.
+    */
+   public static void mostrarEstadisticas() {
+       System.out.println("\n--- REPORTE HISTÓRICO GENERAL ---");
+       System.out.println("Total de vehículos registrados en el día: " + totalVehiculosAtendidos);
+       System.out.println("Recaudación financiera total: $" + recaudacionTotal + " COP");
+   }
+}
