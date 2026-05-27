@@ -1,0 +1,35 @@
+Algoritmo GrullaOrigamiPasoAPaso
+
+   // ---PASO 1: Preparación del material ---
+   Escribir "Paso 1: Toma una hoja de papel y asegúrate de que sea un cuadrado perfecto."
+   Escribir "Presiona 1 cuando tengas el papel listo..."
+   Leer continuar
+
+   // --- PASO 2: Líneas guía (Pliegues preliminares) ---
+   Escribir "Paso 2: Dobla el papel a la mitad en forma de triángulo (diagonal)."
+   Escribir "        Desdóblalo y haz lo mismo con la otra diagonal. Te quedará una 'X'."
+   Escribir "Paso 3: Dale la vuelta al papel."
+   Escribir "Paso 4: Dobla el papel a la mitad horizontalmente y verticalmente (en cruz)."
+   Escribir "        Desdóblalo de nuevo. Ahora tienes guías en cruz y en 'X'."
+
+   // --- PASO 3: Base Preliminar (El Rombo) ---
+   Escribir "Paso 5: Junta las cuatro esquinas del papel hacia abajo."
+   Escribir "        El papel se colapsará solo por las líneas guía, formando un rombo pequeño con las solapas abiertas hacia abajo."
+
+   // --- PASO 4: Base del Pájaro (Pliegue de Pétalo) ---
+   Escribir "Paso 6: Con las solapas abiertas hacia ti, dobla los bordes inferiores izquierdo y derecho hacia la línea central."
+   Escribir "Paso 7: Dobla el triángulo de arriba hacia abajo para marcar el pliegue, y luego desdobla lo que hiciste en el Paso 6 y 7."
+   Escribir "Paso 8: Levanta la primera capa de papel desde la punta inferior hacia arriba (como abriendo la boca de un cocodrilo)."
+   Escribir "        Aplana los lados hacia adentro usando los pliegues marcados. Quedará un rombo alargado."
+   Escribir "Paso 9: Dale la vuelta al papel y repite exactamente los pasos 6, 7 y 8 en el otro lado."
+
+   // --- PASO 5: Detalles Finales (Estilizar y dar forma) ---
+   Escribir "Paso 10: Vuelve a doblar los bordes exteriores inferiores de ambas caras hacia el centro para que las puntas queden más delgadas."
+   Escribir "Paso 11: Toma las dos puntas delgadas de abajo y dóblalas hacia adentro y hacia arriba (una será el cuello y la otra la cola)."
+   Escribir "Paso 12: En la punta elegida para el cuello, haz un pequeño doblez hacia abajo para formar la cabecita de la grulla."
+   Escribir "Paso 13: Baja las alas delicadamente hacia los lados."
+
+   // --- PASO 6: Resultado ---
+   Escribir "Paso 14: Sopla suavemente por el agujero de la base inferior para inflar el cuerpo."
+   Escribir "¡Felicidades! Tu grulla de origami está terminada."
+FinAlgoritmo
